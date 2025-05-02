@@ -150,19 +150,5 @@
       <p>&copy; 2025 Zafran Ullah Khattak. All rights reserved.</p>
     </div>
   </footer>
-
-  <!-- Netlify CMS Scripts -->
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-  <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
-          });
-        }
-      });
-    }
-  </script>
 </body>
 </html>
