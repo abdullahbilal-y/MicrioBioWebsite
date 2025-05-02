@@ -4,12 +4,20 @@
   <head>
     <meta charset="UTF-8" />
     <title>Content Manager</title>
-  </head>
-  <body>
+
+    <!-- js-yaml library (needed to parse config.yml) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+
+    <!-- Prevent CMS from auto-loading without config -->
     <script>
       window.CMS_MANUAL_INIT = true;
     </script>
+  </head>
+  <body>
+    <!-- Netlify CMS Core -->
     <script src="https://unpkg.com/netlify-cms@^2.0.0/dist/netlify-cms.js"></script>
+
+    <!-- Load and parse your config.yml manually -->
     <script>
       fetch('/admin/config.yml')
         .then(response => response.text())
