@@ -1365,3 +1365,55 @@ footer {
 
 
 /* Contact Page =============================================================================================================== */
+
+
+
+/* Netlify Identity Styles */
+.login-item {
+  display: flex;
+  align-items: center;
+}
+
+.netlify-identity-button {
+  background-color: #F3C693;
+  color: #000;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.netlify-identity-button:hover {
+  background-color: #e9b779;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-info p {
+  margin: 0;
+  color: white;
+}
+
+.logout-button {
+  background-color: transparent;
+  border: 1px solid #F3C693;
+  color: #F3C693;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: rgba(243, 198, 147, 0.2);
+}
+
+.protected-content {
+  display: none;
+}
