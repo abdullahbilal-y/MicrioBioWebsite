@@ -1,9 +1,12 @@
 {
-    "name": "zafran-website",
+    "name": "microbio-website",
     "version": "1.0.0",
-    "description": "Zafran restaurant website",
+    "description": "MicroBio Website",
     "scripts": {
-      "build": "node generate-blog-index.js"
+      "build": "echo 'No build step required'"
+    },
+    "devDependencies": {
+      "netlify-plugin-netlify-cms": "^1.3.18"
     },
     "dependencies": {
       "gray-matter": "^4.0.3"
