@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact - Zafran Ullah Khattak, MPhil</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    :root {
+      --main-color: #553822;
+      --light-brown: #74503a;
+      --beige: #f7f3ef;
+      --dark-text: #333333;
+      --light-text: #777777;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      color: var(--dark-text);
+      line-height: 1.6;
+      background-color: white;
+    }
+
+    header {
+      background-color: white;
+      color: var(--main-color);
+      padding: 20px 50px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      box-sizing: border-box;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      font-weight: 500;
+      font-size: 1.5rem;
+      letter-spacing: 1px;
+    }
+
+    .navbar nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    .navbar nav a {
+      color: var(--dark-text);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: color 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .navbar nav a:hover {
+      color: var(--light-brown);
+    }
+
+    .current {
+      border-bottom: 2px solid var(--main-color);
+    }
+
+    /* Qualifications Page Specific Styles */
+    .qualifications-header {
+      background-color: var(--beige);
+      padding: 120px 50px 60px;
+      text-align: center;
+    }
+
+    .qualifications-header h1 {
+      font-size: 2.8rem;
+      color: var(--main-color);
+      margin: 0 0 20px;
+    }
+
+    .qualifications-header p {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      color: var(--light-text);
+    }
+
+    .qualifications-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 50px;
+    }
+
+    .qualification-category {
+      margin-bottom: 60px;
+    }
+
+    .category-title {
+      font-size: 1.8rem;
+      color: var(--main-color);
+      margin-bottom: 30px;
+      position: relative;
+      display: inline-block;
+    }
+
+    .category-title::after {
+      content: '';
+      position: absolute;
+      width: 50px;
+      height: 3px;
+      background-color: var(--main-color);
+      bottom: -10px;
+      left: 0;
+    }
+
+    .qualification-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
+    }
+
+    .qualification-card {
+      background-color: white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      padding: 30px;
+      border-radius: 0;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .qualification-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .qualification-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background-color: var(--main-color);
+    }
+
+    .qualification-title {
+      font-size: 1.4rem;
+      color: var(--main-color);
+      margin-top: 0;
+      margin-bottom: 15px;
+    }
+
+    .qualification-institution {
+      font-size: 1.1rem;
+      color: var(--dark-text);
+      margin-bottom: 10px;
+    }
+
+    .qualification-year {
+      font-size: 0.9rem;
+      color: var(--light-text);
+      margin-bottom: 15px;
+    }
+
+    .qualification-description {
+      color: var(--light-text);
+      margin: 0;
+    }
+
+    .certification-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .certification-item {
+      display: flex;
+      align-items: center;
+      background-color: var(--beige);
+      padding: 20px;
+      border-radius: 0;
+    }
+
+    .certification-icon {
+      flex-shrink: 0;
+      width: 50px;
+      height: 50px;
+      margin-right: 20px;
+      color: var(--main-color);
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .certification-details {
+      flex-grow: 1;
+    }
+
+    .certification-name {
+      font-weight: 600;
+      color: var(--main-color);
+      margin: 0 0 5px;
+    }
+
+    .certification-issuer {
+      font-size: 0.9rem;
+      color: var(--light-text);
+      margin: 0;
+    }
+
+    .cv-download {
+      text-align: center;
+      margin: 60px 0;
+    }
+
+    .download-btn {
+      display: inline-block;
+      background-color: var(--main-color);
+      color: white;
+      text-decoration: none;
+      padding: 15px 40px;
+      border-radius: 0;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: background-color 0.3s;
+    }
+
+    .download-btn:hover {
+      background-color: var(--light-brown);
+    }
+
+    .download-btn i {
+      margin-right: 10px;
+    }
+
+    footer {
+      background-color: var(--main-color);
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-info {
+      text-align: left;
+    }
+
+    .footer-info h3 {
+      margin-top: 0;
+      font-weight: 500;
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    .footer-nav a {
+      color: white;
+      text-decoration: none;
+      transition: opacity 0.3s;
+    }
+
+    .footer-nav a:hover {
+      opacity: 0.8;
+    }
+
+    .copyright {
+      margin-top: 30px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 1024px) {
+      .qualifications-container {
+        padding: 40px 30px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      header {
+        padding: 15px 20px;
+      }
+
+      .navbar {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .logo {
+        margin-bottom: 10px;
+      }
+
+      .navbar nav {
+        gap: 15px;
+      }
+
+      .qualifications-header {
+        padding: 120px 30px 40px;
+      }
+
+      .qualifications-header h1 {
+        font-size: 2.2rem;
+      }
+
+      .qualification-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-content {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .footer-info {
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .navbar nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .navbar nav a {
+        font-size: 0.85rem;
+      }
+
+      .qualifications-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .qualifications-header p {
+        font-size: 1rem;
+      }
+
+      .category-title {
+        font-size: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="logo">Zafran Ullah Khattak, MPhil</div>
+      <nav>
+        <a href="indeex.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="qualifications.html" >Qualifications</a>
+        <a href="blog.html">Research Blog</a>
+        <a href="contact.html"class="current">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="qualifications-header">
+    <h1>Academic Qualifications & Certifications</h1>
+    <p>A comprehensive overview of my educational background, professional qualifications, and specialized certifications in microbiology and related fields.</p>
+  </section>
+
+  <div class="qualifications-container">
+    <div class="qualification-category">
+      <h2 class="category-title">Education</h2>
+      <div class="qualification-grid">
+        <div class="qualification-card">
+          <h3 class="qualification-title">M.Phil Microbiology</h3>
+          <div class="qualification-institution">University of Science & Technology</div>
+          <div class="qualification-year">2018 - 2020</div>
+          <p class="qualification-description">Specialized in molecular microbiology with research focus on antimicrobial resistance in foodborne pathogens. Thesis on the prevalence and characterization of antibiotic-resistant bacteria in processed food products.</p>
+        </div>
+        
+        <div class="qualification-card">
+          <h3 class="qualification-title">BS Microbiology</h3>
+          <div class="qualification-institution">National University of Medical Sciences</div>
+          <div class="qualification-year">2014 - 2018</div>
+          <p class="qualification-description">Comprehensive study of microorganisms including bacteria, fungi, viruses, and parasites. Coursework included microbial genetics, food microbiology, immunology, and diagnostic techniques.</p>
+        </div>
+        
+        <div class="qualification-card">
+          <h3 class="qualification-title">B.Pharmacy</h3>
+          <div class="qualification-institution">Pharmacy Council of Pakistan</div>
+          <div class="qualification-year">2010 - 2014</div>
+          <p class="qualification-description">Studied pharmaceutical sciences with focus on pharmaceutical microbiology, medicinal chemistry, pharmacology, and pharmaceutical technology.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="qualification-category">
+      <h2 class="category-title">Professional Certifications</h2>
+      <div class="certification-list">
+        <div class="certification-item">
+          <div class="certification-icon">
+            <i class="fas fa-certificate"></i>
+          </div>
+          <div class="certification-details">
+            <h4 class="certification-name">NEBOSH IGC (International General Certificate)</h4>
+            <p class="certification-issuer">National Examination Board in Occupational Safety and Health</p>
+          </div>
+        </div>
+        
+        <div class="certification-item">
+          <div class="certification-icon">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <div class="certification-details">
+            <h4 class="certification-name">HACCP Certification</h4>
+            <p class="certification-issuer">International HACCP Alliance</p>
+          </div>
+        </div>
+        
+        <div class="certification-item">
+          <div class="certification-icon">
+            <i class="fas fa-check-circle"></i>
+          </div>
+          <div class="certification-details">
+            <h4 class="certification-name">GMP Certification</h4>
+            <p class="certification-issuer">Global Food Safety Initiative</p>
+          </div>
+        </div>
+        
+        <div class="certification-item">
+          <div class="certification-icon">
+            <i class="fas fa-flask"></i>
+          </div>
+          <div class="certification-details">
+            <h4 class="certification-name">Medical Laboratory Technician Certification</h4>
+            <p class="certification-issuer">Pakistan Medical & Dental Council</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="qualification-category">
+      <h2 class="category-title">Research Publications</h2>
+      <div class="qualification-grid">
+        <div class="qualification-card">
+          <h3 class="qualification-title">Prevalence of Antibiotic-Resistant Bacteria in Processed Foods</h3>
+          <div class="qualification-institution">Journal of Food Microbiology</div>
+          <div class="qualification-year">2020</div>
+          <p class="qualification-description">A comprehensive study on the occurrence and characterization of antibiotic-resistant bacteria in various processed food products, with implications for public health and food safety.</p>
+        </div>
+        
+        <div class="qualification-card">
+          <h3 class="qualification-title">Microbial Analysis of Dairy Products in Regional Markets</h3>
+          <div class="qualification-institution">International Journal of Food Safety</div>
+          <div class="qualification-year">2019</div>
+          <p class="qualification-description">Assessment of microbiological quality and safety of dairy products from local markets, identifying potential hazards and suggesting interventions for improved safety standards.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="cv-download">
+      <a href="#" class="download-btn"><i class="fas fa-download"></i> Download Full CV</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-info">
+        <h3>Zafran Ullah Khattak, MPhil</h3>
+        <p>Microbiologist</p>
+      </div>
+      <div class="footer-nav">
+        <a href="about.html">About</a>
+        <a href="qualifications.html">Qualifications</a>
+        <a href="blog.html">Research Blog</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>&copy; 2025 Zafran Ullah Khattak. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Netlify CMS Scripts -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+</body>
+</html>

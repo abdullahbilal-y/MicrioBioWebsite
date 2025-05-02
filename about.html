@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About - Zafran Ullah Khattak, MPhil</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="style.css" />
+  
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="logo">Zafran Ullah Khattak, MPhil</div>
+      <nav>
+        <a href="indeex.html">Home</a>
+        <a href="about.html" class="current">About</a>
+        <a href="qualifications.html">Qualifications</a>
+        <a href="blog.html">Research Blog</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="about-section">
+    <div class="about-grid">
+      <div class="about-image">
+        <img src="./images/ex.jpg" alt="Zafran Ullah Khattak" />
+        <div class="image-overlay">Microbiologist</div>
+      </div>
+      <div class="about-content">
+        <h1>About Me</h1>
+        <p>Welcome to my professional portfolio. I'm Zafran Ullah Khattak, a dedicated microbiologist with expertise in food safety, quality control, and laboratory diagnostics.</p>
+        
+        <p>With an M.Phil in Microbiology and additional qualifications in pharmacy and safety management, I bring a multidisciplinary approach to my work in microbiology and public health.</p>
+        
+        <div class="highlight-box">
+          <p>"My research focuses on the intersection of microbiology, food safety, and public health, with a particular interest in developing innovative approaches to combat foodborne pathogens."</p>
+        </div>
+        
+        <p>Throughout my career, I have worked across various sectors including food processing facilities, diagnostic laboratories, and academic research institutions. This diverse experience has equipped me with a comprehensive understanding of microbial ecology, pathogen detection techniques, and quality management systems.</p>
+        
+        <p>I am passionate about applying microbiological principles to solve real-world problems and improve public health outcomes. Through rigorous scientific inquiry and practical application, I strive to contribute meaningfully to the field of microbiology.</p>
+        
+        <div class="expertise-section">
+          <h2>Areas of Expertise</h2>
+          <div class="expertise-grid">
+            <div class="expertise-card">
+              <i class="fas fa-microscope"></i>
+              <h3>Microbial Analysis</h3>
+              <p>Specialized in identifying and characterizing microbial populations in various environments, with particular focus on pathogenic microorganisms.</p>
+            </div>
+            <div class="expertise-card">
+              <i class="fas fa-flask"></i>
+              <h3>Food Safety</h3>
+              <p>Implementation of GMP, HACCP protocols, and quality control measures in food processing environments to ensure product safety.</p>
+            </div>
+            <div class="expertise-card">
+              <i class="fas fa-vial"></i>
+              <h3>Laboratory Diagnostics</h3>
+              <p>Experience in medical laboratory techniques, specimen analysis, and diagnostic methodologies for pathogen detection.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-info">
+        <h3>Zafran Ullah Khattak, MPhil</h3>
+        <p>Microbiologist</p>
+      </div>
+      <div class="footer-nav">
+        <a href="about.html">About</a>
+        <a href="qualifications.html">Qualifications</a>
+        <a href="blog.html">Research Blog</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>&copy; 2025 Zafran Ullah Khattak. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Netlify CMS Scripts -->
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
+  </script>
+</body>
+</html>
