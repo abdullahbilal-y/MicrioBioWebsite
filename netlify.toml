@@ -1,0 +1,9 @@
+[build]
+  publish = "/"
+  command = "# no build command"
+
+[[plugins]]
+  package = "netlify-plugin-netlify-cms"
+
+[template.environment]
+  NODE_VERSION = "16"

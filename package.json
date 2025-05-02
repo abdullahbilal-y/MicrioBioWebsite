@@ -1,0 +1,11 @@
+{
+    "name": "zafran-website",
+    "version": "1.0.0",
+    "description": "Zafran restaurant website",
+    "scripts": {
+      "build": "node generate-blog-index.js"
+    },
+    "dependencies": {
+      "gray-matter": "^4.0.3"
+    }
+  }
