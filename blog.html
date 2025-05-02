@@ -1,154 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Research Blog - Zafran Ullah Khattak, MPhil</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" /> -->
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zafran Blog</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="script.js" defer></script>
+    <style>
+        .blog-container {
+            max-width: 1200px;
+            margin: 120px auto 50px;
+            padding: 0 20px;
+        }
+        
+        .blog-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .blog-header h1 {
+            color: #333;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .blog-header p {
+            color: #666;
+            font-size: 1.2rem;
+        }
+        
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .blog-card {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .blog-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .blog-content {
+            padding: 20px;
+        }
+        
+        .blog-date {
+            color: #F3C693;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .blog-title {
+            color: #333;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+        }
+        
+        .blog-excerpt {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .read-more {
+            display: inline-block;
+            background-color: #F3C693;
+            color: #000;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .read-more:hover {
+            background-color: #e9b779;
+        }
+        
+        /* Individual blog post page styles */
+        .blog-post-container {
+            max-width: 800px;
+            margin: 120px auto 50px;
+            padding: 0 20px;
+        }
+        
+        .blog-post-header {
+            margin-bottom: 30px;
+        }
+        
+        .blog-post-title {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .blog-post-meta {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+        
+        .blog-post-image {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .blog-post-content {
+            line-height: 1.8;
+            color: #333;
+        }
+        
+        @media (max-width: 768px) {
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <div class="navbar">
-      <div class="logo">Zafran Ullah Khattak, MPhil</div>
-      <nav>
-        <a href="indeex.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="qualifications.html">Qualifications</a>
-        <a href="blog.html" class="current">Research Blog</a>
-        <a href="contact.html">Contact</a>
-      </nav>
-    </div>
-  </header>
+    <nav>
+        <div class="menu">
+            <div class="logo">
+                <a href="index.html">Zafran</a>
+            </div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#menu">Menu</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+                <li><a href="blog.html" class="active">Blog</a></li>
+                <li class="login-item"><button class="netlify-identity-button">Login</button></li>
+            </ul>
+        </div>
+    </nav>
 
-  <section class="blog-header">
-    <h1>Research Blog</h1>
-    <p>Explore the latest findings, insights, and discussions on microbiology, food safety, and public health.</p>
-  </section>
+    <div class="blog-container">
+        <div class="blog-header">
+            <h1>Zafran Blog</h1>
+            <p>Latest news, recipes, and stories from our kitchen</p>
+        </div>
 
-  <div class="blog-container">
-    <div class="blog-posts">
-      <article class="blog-post">
-        <div class="post-image">
-          <img src="/api/placeholder/800/500" alt="Food Safety in Modern Processing Facilities" />
+        <div class="blog-grid" id="blog-posts-container">
+            <!-- Blog posts will be dynamically loaded here -->
+            <div class="loading">Loading blog posts...</div>
         </div>
-        <div class="post-content">
-          <div class="post-date">April 15, 2025</div>
-          <h2 class="post-title">Food Safety in Modern Processing Facilities: Challenges and Solutions</h2>
-          <p class="post-excerpt">As food processing technologies evolve, new challenges emerge in ensuring product safety. This article explores the latest approaches to maintaining rigorous safety standards in modern food processing environments, with particular focus on the implementation of advanced microbial detection methods and preventive control strategies.</p>
-          <a href="./posts/welcome.md" class="read-more-btn">Read More</a>
-        </div>
-      </article>
-
-      <article class="blog-post">
-        <div class="post-image">
-          <img src="./images/AntimicrobialResistance.png" alt="Antimicrobial Resistance" />
-        </div>
-        <div class="post-content">
-          <div class="post-date">March 22, 2025</div>
-          <h2 class="post-title">Antimicrobial Resistance: A Growing Concern in Food Production</h2>
-          <p class="post-excerpt">Antibiotic resistance in foodborne pathogens poses significant health risks to consumers worldwide. This article examines the prevalence of antimicrobial resistance in various food production sectors, highlighting key findings from recent studies and discussing potential interventions to mitigate this growing threat.</p>
-          <a href="blog-post.html" class="read-more-btn">Read More</a>
-        </div>
-      </article>
-
-      <article class="blog-post">
-        <div class="post-image">
-          <img src="/api/placeholder/800/500" alt="Microbial Ecology" />
-        </div>
-        <div class="post-content">
-          <div class="post-date">February 8, 2025</div>
-          <h2 class="post-title">Microbial Ecology in Food Systems: Understanding Complex Interactions</h2>
-          <p class="post-excerpt">The microbial communities present in food ecosystems play crucial roles in product quality, safety, and shelf life. This article explores recent advances in our understanding of microbial ecology in food systems, emphasizing the complex interactions between microorganisms and their environment, and the implications for food production and safety.</p>
-          <a href="blog-post.html" class="read-more-btn">Read More</a>
-        </div>
-      </article>
-
-      <div class="pagination">
-        <a href="#" class="active">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#"><i class="fas fa-angle-right"></i></a>
-      </div>
     </div>
 
-    <aside class="blog-sidebar">
-      <div class="sidebar-section">
-        <h3 class="sidebar-title">Categories</h3>
-        <ul class="categories-list">
-          <li><a href="#">Food Safety <span>5</span></a></li>
-          <li><a href="#">Microbial Ecology <span>3</span></a></li>
-          <li><a href="#">Antimicrobial Resistance <span>4</span></a></li>
-          <li><a href="#">Laboratory Techniques <span>2</span></a></li>
-          <li><a href="#">Public Health <span>6</span></a></li>
-        </ul>
-      </div>
+    <script src="auth.js"></script>
+    <script>
+        // Function to fetch and display blog posts
+        async function loadBlogPosts() {
+            try {
+                const response = await fetch('/_posts/blog/index.json');
+                if (!response.ok) {
+                    throw new Error('Blog posts could not be loaded');
+                }
+                const posts = await response.json();
+                
+                const container = document.getElementById('blog-posts-container');
+                container.innerHTML = ''; // Clear loading message
+                
+                if (posts.length === 0) {
+                    container.innerHTML = '<p>No blog posts available yet.</p>';
+                    return;
+                }
+                
+                posts.forEach(post => {
+                    const postElement = document.createElement('div');
+                    postElement.className = 'blog-card';
+                    
+                    const thumbnailUrl = post.thumbnail || '/images/default-blog.jpg';
+                    
+                    postElement.innerHTML = `
+                        <div class="blog-image" style="background-image: url('${thumbnailUrl}')"></div>
+                        <div class="blog-content">
+                            <div class="blog-date">${new Date(post.date).toLocaleDateString()}</div>
+                            <h3 class="blog-title">${post.title}</h3>
+                            <p class="blog-excerpt">${post.excerpt || 'Click to read more...'}</p>
+                            <a href="${post.url}" class="read-more">Read More</a>
+                        </div>
+                    `;
+                    
+                    container.appendChild(postElement);
+                });
+                
+            } catch (error) {
+                console.error('Error loading blog posts:', error);
+                document.getElementById('blog-posts-container').innerHTML = 
+                    `<p>Unable to load blog posts. ${error.message}</p>`;
+            }
+        }
 
-      <div class="sidebar-section">
-        <h3 class="sidebar-title">Recent Posts</h3>
-        <div class="recent-post">
-          <div class="recent-post-image">
-            <img src="/api/placeholder/100/100" alt="Food Safety Post" />
-          </div>
-          <div class="recent-post-content">
-            <h4 class="recent-post-title"><a href="#">Food Safety in Modern Processing Facilities</a></h4>
-            <div class="recent-post-date">April 15, 2025</div>
-          </div>
-        </div>
-        <div class="recent-post">
-          <div class="recent-post-image">
-            <img src="/api/placeholder/100/100" alt="Antimicrobial Resistance Post" />
-          </div>
-          <div class="recent-post-content">
-            <h4 class="recent-post-title"><a href="#">Antimicrobial Resistance: A Growing Concern</a></h4>
-            <div class="recent-post-date">March 22, 2025</div>
-          </div>
-        </div>
-        <div class="recent-post">
-          <div class="recent-post-image">
-            <img src="/api/placeholder/100/100" alt="Microbial Ecology Post" />
-          </div>
-          <div class="recent-post-content">
-            <h4 class="recent-post-title"><a href="#">Microbial Ecology in Food Systems</a></h4>
-            <div class="recent-post-date">February 8, 2025</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="sidebar-section">
-        <h3 class="sidebar-title">Tags</h3>
-        <div class="tag-cloud">
-          <a href="#" class="tag">Food Safety</a>
-          <a href="#" class="tag">Microbiology</a>
-          <a href="#" class="tag">Pathogens</a>
-          <a href="#" class="tag">HACCP</a>
-          <a href="#" class="tag">GMP</a>
-          <a href="#" class="tag">Research</a>
-          <a href="#" class="tag">Public Health</a>
-          <a href="#" class="tag">Laboratory</a>
-          <a href="#" class="tag">Diagnostics</a>
-        </div>
-      </div>
-    </aside>
-  </div>
-
-  <footer>
-    <div class="footer-content">
-      <div class="footer-info">
-        <h3>Zafran Ullah Khattak, MPhil</h3>
-        <p>Microbiologist</p>
-      </div>
-      <div class="footer-nav">
-        <a href="about.html">About</a>
-        <a href="qualifications.html">Qualifications</a>
-        <a href="blog.html">Research Blog</a>
-        <a href="contact.html">Contact</a>
-      </div>
-    </div>
-    <div class="copyright">
-      <p>&copy; 2025 Zafran Ullah Khattak. All rights reserved.</p>
-    </div>
-  </footer>
+        // Load blog posts when the page loads
+        document.addEventListener('DOMContentLoaded', loadBlogPosts);
+    </script>
 </body>
 </html>
