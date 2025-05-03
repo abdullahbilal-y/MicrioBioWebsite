@@ -1,213 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zafran Blog</title>
-    <link rel="stylesheet" href="styles.css">
-    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="script.js" defer></script>
-    <style>
-        .blog-container {
-            max-width: 1200px;
-            margin: 120px auto 50px;
-            padding: 0 20px;
-        }
-        
-        .blog-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        
-        .blog-header h1 {
-            color: #333;
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-        }
-        
-        .blog-header p {
-            color: #666;
-            font-size: 1.2rem;
-        }
-        
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .blog-card {
-            background-color: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-        
-        .blog-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .blog-image {
-            height: 200px;
-            background-size: cover;
-            background-position: center;
-        }
-        
-        .blog-content {
-            padding: 20px;
-        }
-        
-        .blog-date {
-            color: #F3C693;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
-        
-        .blog-title {
-            color: #333;
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-        }
-        
-        .blog-excerpt {
-            color: #666;
-            margin-bottom: 20px;
-        }
-        
-        .read-more {
-            display: inline-block;
-            background-color: #F3C693;
-            color: #000;
-            padding: 8px 15px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-        }
-        
-        .read-more:hover {
-            background-color: #e9b779;
-        }
-        
-        /* Individual blog post page styles */
-        .blog-post-container {
-            max-width: 800px;
-            margin: 120px auto 50px;
-            padding: 0 20px;
-        }
-        
-        .blog-post-header {
-            margin-bottom: 30px;
-        }
-        
-        .blog-post-title {
-            font-size: 2.5rem;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        
-        .blog-post-meta {
-            color: #666;
-            font-size: 1rem;
-            margin-bottom: 20px;
-        }
-        
-        .blog-post-image {
-            width: 100%;
-            border-radius: 10px;
-            margin-bottom: 30px;
-        }
-        
-        .blog-post-content {
-            line-height: 1.8;
-            color: #333;
-        }
-        
-        @media (max-width: 768px) {
-            .blog-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Research Blog - Zafran Ullah Khattak, MPhil</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
-    <nav>
-        <div class="menu">
-            <div class="logo">
-                <a href="index.html">Zafran</a>
-            </div>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="index.html#about">About</a></li>
-                <li><a href="index.html#menu">Menu</a></li>
-                <li><a href="index.html#contact">Contact</a></li>
-                <li><a href="blog.html" class="active">Blog</a></li>
-                <li class="login-item"><button class="netlify-identity-button">Login</button></li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="blog-container">
-        <div class="blog-header">
-            <h1>Zafran Blog</h1>
-            <p>Latest news, recipes, and stories from our kitchen</p>
-        </div>
-
-        <div class="blog-grid" id="blog-posts-container">
-            <!-- Blog posts will be dynamically loaded here -->
-            <div class="loading">Loading blog posts...</div>
-        </div>
+  <header>
+    <div class="navbar">
+      <div class="logo">Zafran Ullah Khattak, MPhil</div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="qualifications.html">Qualifications</a>
+        <a href="blog.html" class="current">Research Blog</a>
+        <a href="contact.html">Contact</a>
+        <li class="login-item"><button class="netlify-identity-button">Login</button></li>
+      </nav>
     </div>
+  </header>
 
-    <script src="auth.js"></script>
-    <script>
-        // Function to fetch and display blog posts
-        async function loadBlogPosts() {
-            try {
-                const response = await fetch('/_posts/blog/index.json');
-                if (!response.ok) {
-                    throw new Error('Blog posts could not be loaded');
-                }
-                const posts = await response.json();
-                
-                const container = document.getElementById('blog-posts-container');
-                container.innerHTML = ''; // Clear loading message
-                
-                if (posts.length === 0) {
-                    container.innerHTML = '<p>No blog posts available yet.</p>';
-                    return;
-                }
-                
-                posts.forEach(post => {
-                    const postElement = document.createElement('div');
-                    postElement.className = 'blog-card';
-                    
-                    const thumbnailUrl = post.thumbnail || '/images/default-blog.jpg';
-                    
-                    postElement.innerHTML = `
-                        <div class="blog-image" style="background-image: url('${thumbnailUrl}')"></div>
-                        <div class="blog-content">
-                            <div class="blog-date">${new Date(post.date).toLocaleDateString()}</div>
-                            <h3 class="blog-title">${post.title}</h3>
-                            <p class="blog-excerpt">${post.excerpt || 'Click to read more...'}</p>
-                            <a href="${post.url}" class="read-more">Read More</a>
-                        </div>
-                    `;
-                    
-                    container.appendChild(postElement);
-                });
-                
-            } catch (error) {
-                console.error('Error loading blog posts:', error);
-                document.getElementById('blog-posts-container').innerHTML = 
-                    `<p>Unable to load blog posts. ${error.message}</p>`;
-            }
-        }
+  <section class="blog-list-container">
+    <h1>Research Blog</h1>
+    <div id="blog-posts" class="blog-posts-grid">
+      <!-- Blog posts will be loaded here by script.js -->
+      <p class="loading">Loading blog posts...</p>
+    </div>
+  </section>
 
-        // Load blog posts when the page loads
-        document.addEventListener('DOMContentLoaded', loadBlogPosts);
-    </script>
+  <footer>
+    <div class="footer-content">
+      <div class="footer-info">
+        <h3>Zafran Ullah Khattak, MPhil</h3>
+        <p>Microbiologist</p>
+      </div>
+      <div class="footer-nav">
+        <a href="about.html">About</a>
+        <a href="qualifications.html">Qualifications</a>
+        <a href="blog.html">Research Blog</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>&copy; 2025 Zafran Ullah Khattak. All rights reserved.</p>
+    </div>
+  </footer>
+  
+  <script src="auth.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

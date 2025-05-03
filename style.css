@@ -1076,6 +1076,84 @@ footer {
   }
 }
 
+/* asd */
+/* Blog List Page Styles */
+.blog-list-container {
+  max-width: 1200px;
+  margin: 100px auto 50px;
+  padding: 0 20px;
+}
+
+.blog-list-container h1 {
+  text-align: center;
+  margin-bottom: 40px;
+  color: #333;
+}
+
+.blog-posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.blog-preview {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-preview:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.blog-preview a {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.blog-thumbnail {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.blog-preview h2 {
+  padding: 15px 20px 0;
+  font-size: 1.5rem;
+  color: #333;
+  margin: 0;
+}
+
+.blog-meta {
+  padding: 5px 20px 10px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.blog-preview p {
+  padding: 0 20px;
+  margin-bottom: 15px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.read-more {
+  display: block;
+  padding: 0 20px 20px;
+  color: #F3C693;
+  font-weight: 600;
+}
+
+.loading, .blog-error, .no-posts {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  grid-column: 1 / -1;
+}
 
 /* qualifications Page =============================================================================================================== */
 /* Qualifications Page Specific Styles */
