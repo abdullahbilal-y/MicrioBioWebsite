@@ -194,19 +194,16 @@ function generateBlogIndex() {
 
     <div class="blog-post-container">
         <div class="blog-post-header">
-            <h1 class="blog-post-title">{{title}}</h1>
+            <h1 class="blog-post-title">${data.title}</h1>
             <div class="blog-post-meta">
-                Published on {{formattedDate}}
-                {{#if author}}by {{author}}{{/if}}
+                Published on ${new Date(data.date).toLocaleDateString()}
+                
             </div>
         </div>
 
-        {{#if thumbnail}}
-        <img src="{{thumbnail}}" alt="{{title}}" class="blog-post-image">
-        {{/if}}
-
+       
         <div class="blog-post-content">
-            {{{contentHtml}}}
+        ${htmlContent}
         </div>
         
         <div class="blog-post-footer">
