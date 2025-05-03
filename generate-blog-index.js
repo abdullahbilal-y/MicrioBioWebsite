@@ -31,15 +31,50 @@ function generateBlogIndex() {
       const htmlTemplate = `
         <!DOCTYPE html>
         <html lang="en">
+        
         <head>
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          </head>
+          <header>
+    <div class="navbar">
+      <div class="logo">Zafran Ullah Khattak, MPhil</div>
+      <nav>
+        <a href="index.html" class="current">Home</a>
+        <a href="about.html">About</a>
+        <a href="qualifications.html">Qualifications</a>
+        <a href="blog.html">Research Blog</a>
+        <a href="contact.html">Contact</a>
+        <li class="login-item"><button class="netlify-identity-button">Login</button></li>
+
+        
+      </nav>
+    </div>
+  </header>
+          <head>
           <title>${data.title}</title>
         </head>
         <body>
           <h1>${data.title}</h1>
           <p><em>Published on ${new Date(data.date).toLocaleDateString()}</em></p>
           ${htmlContent}
+           <footer>
+    <div class="footer-content">
+      <div class="footer-info">
+        <h3>Zafran Ullah Khattak, MPhil</h3>
+        <p>Microbiologist</p>
+      </div>
+      <div class="footer-nav">
+        <a href="about.html">About</a>
+        <a href="qualifications.html">Qualifications</a>
+        <a href="blog.html">Research Blog</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>&copy; 2025 Zafran Ullah Khattak. All rights reserved.</p>
+    </div>
+  </footer>
         </body>
         </html>
       `;
