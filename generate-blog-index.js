@@ -30,24 +30,29 @@ function generateBlogIndex() {
       const htmlFilePath = path.join(outputDir, htmlFileName);
       const htmlTemplate = `
         <!DOCTYPE html>
-        <html lang="en">
-        
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          </head>
-          <header>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Antimicrobial Resistance: A Global Health Crisis - Zafran Ullah Khattak, MPhil</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="../style.css" />
+  <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+</head>
+
+<body>
+  <header>
     <div class="navbar">
       <div class="logo">Zafran Ullah Khattak, MPhil</div>
       <nav>
-        <a href="index.html" class="current">Home</a>
-        <a href="about.html">About</a>
-        <a href="qualifications.html">Qualifications</a>
-        <a href="blog.html">Research Blog</a>
-        <a href="contact.html">Contact</a>
+        <a href="../index.html">Home</a>
+        <a href="../about.html">About</a>
+        <a href="../qualifications.html">Qualifications</a>
+        <a href="../blog.html" class="current">Research Blog</a>
+        <a href="../contact.html">Contact</a>
         <li class="login-item"><button class="netlify-identity-button">Login</button></li>
-
-        
       </nav>
     </div>
   </header>
@@ -58,23 +63,25 @@ function generateBlogIndex() {
           <h1>${data.title}</h1>
           <p><em>Published on ${new Date(data.date).toLocaleDateString()}</em></p>
           ${htmlContent}
-           <footer>
+          <footer>
     <div class="footer-content">
       <div class="footer-info">
         <h3>Zafran Ullah Khattak, MPhil</h3>
         <p>Microbiologist</p>
       </div>
       <div class="footer-nav">
-        <a href="about.html">About</a>
-        <a href="qualifications.html">Qualifications</a>
-        <a href="blog.html">Research Blog</a>
-        <a href="contact.html">Contact</a>
+        <a href="../about.html">About</a>
+        <a href="../qualifications.html">Qualifications</a>
+        <a href="../blog.html">Research Blog</a>
+        <a href="../contact.html">Contact</a>
       </div>
     </div>
     <div class="copyright">
       <p>&copy; 2025 Zafran Ullah Khattak. All rights reserved.</p>
     </div>
   </footer>
+  
+  <script src="../auth.js"></script>
         </body>
         </html>
       `;
