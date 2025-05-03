@@ -1,78 +1,64 @@
 const fs = require('fs');
 const path = require('path');
 const matter = require('gray-matter');
+const marked = require('marked');
 
-// Directories containing blog posts
-const POST_DIRS = [
-  path.join(process.cwd(), '_posts/blog'),
-  path.join(process.cwd(), 'posts')
-];
+const blogPostsDir = path.join(__dirname, '_posts/blog');
+const outputDir = path.join(__dirname, 'blog'); // Directory for HTML files
+const indexFile = path.join(blogPostsDir, 'index.json');
 
-// Output files for the index
-const OUTPUT_FILES = [
-  path.join(process.cwd(), '_posts/blog/index.json'),
-  path.join(process.cwd(), 'posts/index.json')
-];
+function generateBlogIndex() {
+  const posts = [];
 
-// Ensure the directories exist
-POST_DIRS.forEach(dir => {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
+  // Ensure the output directory exists
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir, { recursive: true });
   }
-});
 
-// Get all posts from both directories
-let allPosts = [];
+  // Read all Markdown files
+  fs.readdirSync(blogPostsDir).forEach(file => {
+    if (file.endsWith('.md')) {
+      const filePath = path.join(blogPostsDir, file);
+      const content = fs.readFileSync(filePath, 'utf-8');
+      const { data, content: markdownContent } = matter(content);
 
-POST_DIRS.forEach(dirPath => {
-  if (fs.existsSync(dirPath)) {
-    const files = fs.readdirSync(dirPath)
-      .filter(filename => filename.endsWith('.md') && filename !== 'index.md');
-    
-    files.forEach(filename => {
-      const filePath = path.join(dirPath, filename);
-      const fileContents = fs.readFileSync(filePath, 'utf8');
-      
-      try {
-        // Parse frontmatter
-        const { data, content } = matter(fileContents);
-        
-        // Generate a URL for the post
-        const slug = filename.replace(/\.md$/, '');
-        const url = `/blog/${slug}`;
-        
-        // Create an excerpt (first 150 characters)
-        const excerpt = content
-          .replace(/[#*_`]/g, '') // Remove markdown formatting
-          .trim()
-          .slice(0, 150)
-          .trim() + '...';
-        
-        // Add the post data
-        allPosts.push({
-          title: data.title || 'Untitled',
-          date: data.date || new Date(),
-          url: url,
-          thumbnail: data.thumbnail || null,
-          excerpt: excerpt
-        });
-      } catch (error) {
-        console.error(`Error processing ${filename}:`, error.message);
-      }
-    });
-  }
-});
+      // Convert Markdown to HTML
+      const htmlContent = marked.parse(markdownContent);
 
-// Sort posts by date (newest first)
-allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+      // Generate the HTML file
+      const htmlFileName = file.replace('.md', '.html');
+      const htmlFilePath = path.join(outputDir, htmlFileName);
+      const htmlTemplate = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>${data.title}</title>
+        </head>
+        <body>
+          <h1>${data.title}</h1>
+          <p><em>Published on ${new Date(data.date).toLocaleDateString()}</em></p>
+          ${htmlContent}
+        </body>
+        </html>
+      `;
+      fs.writeFileSync(htmlFilePath, htmlTemplate);
 
-// Write the index files
-OUTPUT_FILES.forEach(outputFile => {
-  const dir = path.dirname(outputFile);
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
-  fs.writeFileSync(outputFile, JSON.stringify(allPosts, null, 2));
-});
+      // Add the post to the index
+      posts.push({
+        title: data.title || 'Untitled Post',
+        date: data.date || new Date().toISOString(),
+        url: `/blog/${htmlFileName}`,
+        thumbnail: data.thumbnail || null,
+        excerpt: data.excerpt || markdownContent.substring(0, 150) + '...',
+      });
+    }
+  });
 
-console.log(`Generated index with ${allPosts.length} posts`);
+  // Write the index.json file
+  fs.writeFileSync(indexFile, JSON.stringify(posts, null, 2));
+  console.log('Blog index and HTML files generated.');
+}
+
+generateBlogIndex();
