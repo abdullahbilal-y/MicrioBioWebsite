@@ -9,11 +9,6 @@ const POSTS_DIR = path.join(process.cwd(), '_posts/blog');
 // Output file for the index
 const OUTPUT_FILE = path.join(process.cwd(), '_posts/blog/index.json');
 
-
- // Convert Markdown to HTML
- const contentHtml = marked.parse(content);
-
- 
 // HTML Template for individual blog posts
 const BLOG_POST_TEMPLATE = `<!DOCTYPE html>
 <html lang="en">
@@ -253,7 +248,8 @@ const posts = postFiles.map(filename => {
     // Parse frontmatter
     const { data, content } = matter(fileContents);
     
-   
+    // Convert Markdown to HTML
+    const contentHtml = marked.parse(content);
     
     // Generate a slug for the post
     const slug = filename.replace(/\.md$/, '');
