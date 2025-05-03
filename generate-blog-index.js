@@ -206,22 +206,7 @@ function generateBlogIndex() {
         ${htmlContent}
         </div>
         
-        <div class="blog-post-footer">
-            <div class="blog-nav-links">
-                {{#if previousPost}}
-                <a href="{{previousPost.url}}" class="prev-post">&larr; Previous Post</a>
-                {{else}}
-                <span></span>
-                {{/if}}
-                
-                {{#if nextPost}}
-                <a href="{{nextPost.url}}" class="next-post">Next Post &rarr;</a>
-                {{else}}
-                <span></span>
-                {{/if}}
-            </div>
-        </div>
-    </div>
+        
 
     <footer>
         <div class="footer-content">
