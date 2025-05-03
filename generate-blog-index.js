@@ -358,7 +358,7 @@ function applyTemplate(template, data) {
   return template;
 }
 
-// Helper function to escape HTML special characters
+// Helper function to escape HTML special characters.
 function escapeHtml(unsafe) {
   if (typeof unsafe !== 'string') return unsafe;
   return unsafe
