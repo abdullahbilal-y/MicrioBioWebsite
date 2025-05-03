@@ -1,34 +1,16 @@
+// generate-blog-index.js with included HTML template
+
 const fs = require('fs');
 const path = require('path');
 const matter = require('gray-matter');
-const marked = require('marked');
 
-const blogPostsDir = path.join(__dirname, '_posts/blog');
-const outputDir = path.join(__dirname, 'blog'); // Directory for HTML files
-const indexFile = path.join(blogPostsDir, 'index.json');
+// Directories containing blog posts
+const POSTS_DIR = path.join(process.cwd(), '_posts/blog');
+// Output file for the index
+const OUTPUT_FILE = path.join(process.cwd(), '_posts/blog/index.json');
 
-function generateBlogIndex() {
-  const posts = [];
-
-  // Ensure the output directory exists
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
-  }
-
-  // Read all Markdown files
-  fs.readdirSync(blogPostsDir).forEach(file => {
-    if (file.endsWith('.md')) {
-      const filePath = path.join(blogPostsDir, file);
-      const content = fs.readFileSync(filePath, 'utf-8');
-      const { data, content: markdownContent } = matter(content);
-
-      // Convert Markdown to HTML
-      const htmlContent = marked.parse(markdownContent);
-
-      // Generate the HTML file
-      const htmlFileName = file.replace('.md', '.html');
-      const htmlFilePath = path.join(outputDir, htmlFileName);
-      const htmlTemplate = `<!DOCTYPE html>
+// HTML Template for individual blog posts
+const BLOG_POST_TEMPLATE = `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -247,22 +229,128 @@ function generateBlogIndex() {
     <script src="/auth.js"></script>
 </body>
 </html>`;
-      fs.writeFileSync(htmlFilePath, htmlTemplate);
 
-      // Add the post to the index
-      posts.push({
-        title: data.title || 'Untitled Post',
-        date: data.date || new Date().toISOString(),
-        url: `/blog/${htmlFileName}`,
-        thumbnail: data.thumbnail || null,
-        excerpt: data.excerpt || markdownContent.substring(0, 150) + '...',
-      });
-    }
-  });
-
-  // Write the index.json file
-  fs.writeFileSync(indexFile, JSON.stringify(posts, null, 2));
-  console.log('Blog index and HTML files generated.');
+// Ensure the directory exists
+if (!fs.existsSync(POSTS_DIR)) {
+  fs.mkdirSync(POSTS_DIR, { recursive: true });
 }
 
-generateBlogIndex();
+// Get all .md files in the posts directory
+const postFiles = fs.readdirSync(POSTS_DIR)
+  .filter(filename => filename.endsWith('.md') && filename !== 'index.md');
+
+// Parse each post file
+const posts = postFiles.map(filename => {
+  const filePath = path.join(POSTS_DIR, filename);
+  const fileContents = fs.readFileSync(filePath, 'utf8');
+  
+  try {
+    // Parse frontmatter
+    const { data, content } = matter(fileContents);
+    
+    // Generate a slug for the post
+    const slug = filename.replace(/\.md$/, '');
+    const url = `/blog/${slug}.html`;
+    
+    // Create an excerpt (first 150 characters)
+    const excerpt = content
+      .replace(/[#*_`]/g, '') // Remove markdown formatting
+      .trim()
+      .slice(0, 150)
+      .trim() + '...';
+    
+    // Format the date
+    const date = data.date ? new Date(data.date) : new Date();
+    const formattedDate = date.toLocaleDateString('en-US', {
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric'
+    });
+    
+    // Return the post data
+    return {
+      title: data.title || 'Untitled',
+      date: date,
+      formattedDate: formattedDate,
+      url: url,
+      slug: slug,
+      thumbnail: data.thumbnail || null,
+      author: data.author || null,
+      excerpt: excerpt,
+      content: content
+    };
+  } catch (error) {
+    console.error(`Error processing ${filename}:`, error.message);
+    return null;
+  }
+}).filter(Boolean); // Remove any null entries
+
+// Sort posts by date (newest first)
+posts.sort((a, b) => b.date - a.date);
+
+// Add previous/next post links
+posts.forEach((post, index) => {
+  post.previousPost = index < posts.length - 1 ? posts[index + 1] : null;
+  post.nextPost = index > 0 ? posts[index - 1] : null;
+});
+
+// Write the index file for the listing page
+fs.writeFileSync(OUTPUT_FILE, JSON.stringify(posts.map(post => ({
+  title: post.title,
+  date: post.date,
+  url: post.url,
+  thumbnail: post.thumbnail,
+  excerpt: post.excerpt
+})), null, 2));
+
+// Create individual HTML files for each post
+const BLOG_DIR = path.join(process.cwd(), 'blog');
+if (!fs.existsSync(BLOG_DIR)) {
+  fs.mkdirSync(BLOG_DIR, { recursive: true });
+}
+
+// Function to replace template variables with actual content
+function applyTemplate(template, data) {
+  // Handle conditionals
+  template = template.replace(/\{\{#if ([^}]+)\}\}(.*?)\{\{else\}\}(.*?)\{\{\/if\}\}/gs, (match, condition, ifContent, elseContent) => {
+    const props = condition.split('.');
+    let value = data;
+    for (const prop of props) {
+      value = value?.[prop];
+    }
+    return value ? ifContent : elseContent;
+  });
+  
+  template = template.replace(/\{\{#if ([^}]+)\}\}(.*?)\{\{\/if\}\}/gs, (match, condition, content) => {
+    const props = condition.split('.');
+    let value = data;
+    for (const prop of props) {
+      value = value?.[prop];
+    }
+    return value ? content : '';
+  });
+  
+  // Handle variables
+  template = template.replace(/\{\{\{content\}\}\}/g, data.content);
+  template = template.replace(/\{\{([^}]+)\}\}/g, (match, key) => {
+    const props = key.split('.');
+    let value = data;
+    for (const prop of props) {
+      if (value === undefined || value === null) return '';
+      value = value[prop];
+    }
+    return value !== undefined && value !== null ? value : '';
+  });
+  
+  return template;
+}
+
+// Generate HTML files for each post
+posts.forEach(post => {
+  const postHtml = applyTemplate(BLOG_POST_TEMPLATE, post);
+  const outputPath = path.join(BLOG_DIR, `${post.slug}.html`);
+  fs.writeFileSync(outputPath, postHtml);
+});
+
+console.log(`Generated index with ${posts.length} posts`);
+console.log(`Generated ${posts.length} individual HTML blog post pages`);
