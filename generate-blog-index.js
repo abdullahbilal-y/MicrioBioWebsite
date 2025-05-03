@@ -1,8 +1,8 @@
-// generate-blog-index.js with included HTML template
-
+// generate-blog-index.js with Markdown to HTML conversion
 const fs = require('fs');
 const path = require('path');
 const matter = require('gray-matter');
+const marked = require('marked'); // Add this package for Markdown conversion
 
 // Directories containing blog posts
 const POSTS_DIR = path.join(process.cwd(), '_posts/blog');
@@ -188,7 +188,7 @@ const BLOG_POST_TEMPLATE = `<!DOCTYPE html>
         {{/if}}
 
         <div class="blog-post-content">
-            {{{content}}}
+            {{{contentHtml}}}
         </div>
         
         <div class="blog-post-footer">
@@ -248,6 +248,9 @@ const posts = postFiles.map(filename => {
     // Parse frontmatter
     const { data, content } = matter(fileContents);
     
+    // Convert Markdown to HTML
+    const contentHtml = marked.parse(content);
+    
     // Generate a slug for the post
     const slug = filename.replace(/\.md$/, '');
     const url = `/blog/${slug}.html`;
@@ -277,7 +280,8 @@ const posts = postFiles.map(filename => {
       thumbnail: data.thumbnail || null,
       author: data.author || null,
       excerpt: excerpt,
-      content: content
+      content: content,
+      contentHtml: contentHtml
     };
   } catch (error) {
     console.error(`Error processing ${filename}:`, error.message);
@@ -331,8 +335,7 @@ function applyTemplate(template, data) {
   });
   
   // Handle variables
-  template = template.replace(/\{\{\{content\}\}\}/g, data.content);
-  template = template.replace(/\{\{([^}]+)\}\}/g, (match, key) => {
+  template = template.replace(/\{\{\{([^}]+)\}\}\}/g, (match, key) => {
     const props = key.split('.');
     let value = data;
     for (const prop of props) {
@@ -342,7 +345,28 @@ function applyTemplate(template, data) {
     return value !== undefined && value !== null ? value : '';
   });
   
+  template = template.replace(/\{\{([^}]+)\}\}/g, (match, key) => {
+    const props = key.split('.');
+    let value = data;
+    for (const prop of props) {
+      if (value === undefined || value === null) return '';
+      value = value[prop];
+    }
+    return value !== undefined && value !== null ? escapeHtml(value) : '';
+  });
+  
   return template;
+}
+
+// Helper function to escape HTML special characters
+function escapeHtml(unsafe) {
+  if (typeof unsafe !== 'string') return unsafe;
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 // Generate HTML files for each post
