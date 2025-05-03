@@ -1,5 +1,5 @@
 
-fetch('/posts/index.json')
+fetch('/_posts/index.json')
   .then(response => response.json())
   .then(posts => {
     const container = document.getElementById('blog-posts');
