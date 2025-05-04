@@ -199,6 +199,14 @@ function generateBlogIndex() {
                 Published on ${new Date(data.date).toLocaleDateString()}
                 
             </div>
+             <div class="blog-post-meta">
+                Published on ${data.thumbnail}
+                
+            </div>
+             <div class="blog-post-meta">
+                Published on ${data.author}
+                
+            </div>
         </div>
 
        

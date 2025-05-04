@@ -148,7 +148,10 @@
       <p>&copy; 2025 Zafran Ullah Khattak. All rights reserved.</p>
     </div>
   </footer>
-
+  <div id="form-success" style="display:none; margin-top: 20px; color: green; font-weight: 500;">
+    ✅ Thank you! Your message has been sent successfully.
+  </div>
+  
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
     if (window.netlifyIdentity) {
@@ -161,5 +164,26 @@
       });
     }
   </script>
+  <script>
+    const form = document.querySelector("form");
+    const successMsg = document.getElementById("form-success");
+  
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+  
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(formData).toString()
+      })
+      .then(() => {
+        form.style.display = "none";
+        successMsg.style.display = "block";
+      })
+      .catch(error => alert("Form submission error: " + error));
+    });
+  </script>
+  
 </body>
 </html>
