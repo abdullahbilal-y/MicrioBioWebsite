@@ -16,7 +16,15 @@
   <header>
     <div class="navbar">
       <div class="logo">Zafran Ullah Khattak, MPhil</div>
+      <div class="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+        
+      </div>
       <nav>
+        
+
         <a href="index.html" class="current">Home</a>
         <a href="about.html">About</a>
         <a href="qualifications.html">Qualifications</a>
@@ -25,6 +33,7 @@
 
         
       </nav>
+      <div class="overlay"></div>
     </div>
   </header>
 
@@ -145,6 +154,38 @@
         }
       });
     }
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const menuToggle = document.querySelector('.menu-toggle');
+      const nav = document.querySelector('.navbar nav');
+      const overlay = document.querySelector('.overlay');
+      
+      menuToggle.addEventListener('click', function() {
+        menuToggle.classList.toggle('active');
+        nav.classList.toggle('active');
+        overlay.classList.toggle('active');
+        document.body.classList.toggle('menu-open');
+      });
+      
+      overlay.addEventListener('click', function() {
+        menuToggle.classList.remove('active');
+        nav.classList.remove('active');
+        overlay.classList.remove('active');
+        document.body.classList.remove('menu-open');
+      });
+      
+      // Close menu when clicking a link
+      const navLinks = document.querySelectorAll('.navbar nav a');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          menuToggle.classList.remove('active');
+          nav.classList.remove('active');
+          overlay.classList.remove('active');
+          document.body.classList.remove('menu-open');
+        });
+      });
+    });
   </script>
 </body>
 </html>
