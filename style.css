@@ -544,11 +544,11 @@ footer {
  
   .profile-image {
     left: 40px;
-    bottom: 60px;
+    bottom: 70px;
   }
   .profile-image img {
-    width: 120px;
-    height: 150px;
+    width: 220px;
+    height: 250px;
   }
 
   .highlight-box {
