@@ -503,11 +503,11 @@ footer {
 @media (max-width: 600px) {
   .profile-image {
     left: 30px;
-    bottom: 60px;
+    bottom: 80px;
   }
   .profile-image img {
-    width: 160px;
-    height: 200px;
+    width: 220px;
+    height: 250px;
   }
 }
 
@@ -544,7 +544,7 @@ footer {
  
   .profile-image {
     left: 40px;
-    bottom: 70px;
+    bottom: 75px;
   }
   .profile-image img {
     width: 220px;
