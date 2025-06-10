@@ -503,7 +503,7 @@ footer {
 @media (max-width: 600px) {
   .profile-image {
     left: 30px;
-    bottom: 30px;
+    bottom: 50px;
   }
   .profile-image img {
     width: 160px;
