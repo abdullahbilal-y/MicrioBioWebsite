@@ -70,11 +70,20 @@
       window.netlifyIdentity.on("init", user => {
         if (!user) {
           window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
+            window.location.href = "/admin/";
           });
         }
       });
     }
+    // Optional: Open the Netlify Identity modal when the button is clicked
+    document.addEventListener('DOMContentLoaded', function() {
+      const loginBtn = document.querySelector('.netlify-identity-button');
+      if (loginBtn && window.netlifyIdentity) {
+        loginBtn.addEventListener('click', function() {
+          window.netlifyIdentity.open();
+        });
+      }
+    });
   </script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
