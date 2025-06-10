@@ -59,29 +59,28 @@
 
   <script>
     // --- Netlify Identity Login Redirect ---
+    // This now unconditionally sets up the redirect.
+    // It will fire WHENEVER a user successfully logs in.
     if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          // If no user is logged in, set up a listener for the login event.
-          window.netlifyIdentity.on("login", () => {
-            // When a user logs in, redirect to the admin page.
-            document.location.href = "/admin/";
-          });
+      window.netlifyIdentity.on("login", user => {
+        if (user) {
+          document.location.href = "/admin/";
         }
       });
     }
 
+    // --- Page Functionality (Listeners) ---
     document.addEventListener('DOMContentLoaded', function() {
-      // --- Event listener for the Login Button ---
+      // Event listener for the Login Button
       const loginBtn = document.querySelector('.netlify-identity-button');
       if (loginBtn) {
         loginBtn.addEventListener('click', function(e) {
-          e.preventDefault(); // Prevent any default button behavior
+          e.preventDefault(); // Prevent default button behavior
           window.netlifyIdentity.open(); // Open the Netlify Identity modal
         });
       }
 
-      // --- Menu Toggle Functionality ---
+      // Menu Toggle Functionality
       const menuToggle = document.querySelector('.menu-toggle');
       const nav = document.querySelector('.navbar nav');
       const overlay = document.querySelector('.overlay');
