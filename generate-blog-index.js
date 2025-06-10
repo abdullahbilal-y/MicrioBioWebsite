@@ -177,7 +177,6 @@ function generateBlogIndex() {
                 <a href="/qualifications.html">Qualifications</a>
                 <a href="/blog.html">Research Blog</a>
                 <a href="/contact.html">Contact</a>
-                <li class="login-item"><button class="netlify-identity-button">Login</button></li>
             </nav>
         </div>
     </header>
