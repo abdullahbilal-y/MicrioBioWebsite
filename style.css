@@ -500,6 +500,16 @@ footer {
 
 }
 
+@media (max-width: 600px) {
+  .profile-image {
+    left: 20px;
+    bottom: 30px;
+  }
+  .profile-image img {
+    width: 160px;
+    height: 200px;
+  }
+}
 
 @media (max-width: 480px) {
   .hero-content {
@@ -532,7 +542,14 @@ footer {
   }
 
  
-  
+  .profile-image {
+    left: 10px;
+    bottom: 10px;
+  }
+  .profile-image img {
+    width: 120px;
+    height: 150px;
+  }
 
   .highlight-box {
     padding: 20px;
