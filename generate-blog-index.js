@@ -22,8 +22,20 @@ function generateBlogIndex() {
       const content = fs.readFileSync(filePath, 'utf-8');
       const { data, content: markdownContent } = matter(content);
 
-      // Convert Markdown to HTML
-      const htmlContent = marked.parse(markdownContent);
+      // Determine content type and generate HTML content accordingly
+      let htmlContent = '';
+      if (data.content_type === 'pdf' && data.pdf) {
+        // Embed or link to the PDF
+        htmlContent = `
+          <div class="pdf-embed-container">
+            <p><a href="${data.pdf}" target="_blank" rel="noopener">View PDF</a></p>
+            <iframe src="${data.pdf}" width="100%" height="800px" style="border:none;"></iframe>
+          </div>
+        `;
+      } else {
+        // Default: render markdown (do not change this logic)
+        htmlContent = marked.parse(markdownContent);
+      }
 
       // Generate the HTML file
       const htmlFileName = file.replace('.md', '.html');
@@ -33,7 +45,7 @@ function generateBlogIndex() {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}} - Zafran Ullah Khattak, MPhil</title>
+    <title>${data.title || 'Untitled Post'} - Zafran Ullah Khattak, MPhil</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="/style.css">
@@ -45,23 +57,19 @@ function generateBlogIndex() {
             margin: 100px auto 50px;
             padding: 0 20px;
         }
-        
         .blog-post-header {
             margin-bottom: 30px;
         }
-        
         .blog-post-title {
             font-size: 2.5rem;
             color: #333;
             margin-bottom: 10px;
         }
-        
         .blog-post-meta {
             color: #666;
             font-size: 1rem;
             margin-bottom: 20px;
         }
-        
         .blog-post-image {
             width: 100%;
             border-radius: 10px;
@@ -69,37 +77,30 @@ function generateBlogIndex() {
             max-height: 500px;
             object-fit: cover;
         }
-        
         .blog-post-content {
             line-height: 1.8;
             color: #333;
         }
-        
         .blog-post-content h2 {
             margin-top: 40px;
             margin-bottom: 20px;
             color: #444;
         }
-        
         .blog-post-content h3 {
             margin-top: 30px;
             margin-bottom: 15px;
             color: #555;
         }
-        
         .blog-post-content p {
             margin-bottom: 20px;
         }
-        
         .blog-post-content ul, .blog-post-content ol {
             margin-bottom: 20px;
             padding-left: 25px;
         }
-        
         .blog-post-content li {
             margin-bottom: 10px;
         }
-        
         .blog-post-content blockquote {
             border-left: 5px solid #F3C693;
             padding-left: 20px;
@@ -108,20 +109,17 @@ function generateBlogIndex() {
             font-style: italic;
             color: #555;
         }
-        
         .blog-post-content img {
             max-width: 100%;
             border-radius: 5px;
             margin: 20px 0;
         }
-        
         .blog-post-content code {
             background-color: #f4f4f4;
             padding: 2px 5px;
             border-radius: 3px;
             font-family: monospace;
         }
-        
         .blog-post-content pre {
             background-color: #f4f4f4;
             padding: 15px;
@@ -129,27 +127,22 @@ function generateBlogIndex() {
             overflow-x: auto;
             margin-bottom: 20px;
         }
-        
         .blog-post-content a {
             color: #F3C693;
             text-decoration: none;
         }
-        
         .blog-post-content a:hover {
             text-decoration: underline;
         }
-        
         .blog-post-footer {
             margin-top: 50px;
             padding-top: 30px;
             border-top: 1px solid #eee;
         }
-        
         .blog-nav-links {
             display: flex;
             justify-content: space-between;
         }
-        
         .blog-nav-links a {
             color: #F3C693;
             text-decoration: none;
@@ -159,18 +152,15 @@ function generateBlogIndex() {
             border-radius: 5px;
             transition: all 0.3s ease;
         }
-        
         .blog-nav-links a:hover {
             background-color: #F3C693;
             color: #fff;
         }
-        
         /* Responsive adjustments */
         @media (max-width: 768px) {
             .blog-post-title {
                 font-size: 2rem;
             }
-            
             .blog-post-container {
                 margin-top: 80px;
             }
@@ -196,25 +186,19 @@ function generateBlogIndex() {
         <div class="blog-post-header">
             <h1 class="blog-post-title">${data.title}</h1>
             <div class="blog-post-meta">
-                Published on ${new Date(data.date).toLocaleDateString()}
-                
+                Published on ${data.date ? new Date(data.date).toLocaleDateString() : ''}
             </div>
-             <div class="blog-post-meta">
-                Published on ${data.thumbnail}
-                
+            <div class="blog-post-meta">
+                ${data.thumbnail ? `<img src="${data.thumbnail}" alt="Featured Image" class="blog-post-image">` : ''}
             </div>
-             <div class="blog-post-meta">
-                Published on ${data.author}
-                
+            <div class="blog-post-meta">
+                Published by ${data.author || ''}
             </div>
         </div>
-
-       
         <div class="blog-post-content">
         ${htmlContent}
         </div>
-        
-        
+    </div>
 
     <footer>
         <div class="footer-content">
@@ -233,10 +217,10 @@ function generateBlogIndex() {
             <p>&copy; 2025 Zafran Ullah Khattak. All rights reserved.</p>
         </div>
     </footer>
-    
     <script src="/auth.js"></script>
 </body>
 </html>`;
+
       fs.writeFileSync(htmlFilePath, htmlTemplate);
 
       // Add the post to the index
@@ -245,7 +229,9 @@ function generateBlogIndex() {
         date: data.date || new Date().toISOString(),
         url: `/blog/${htmlFileName}`,
         thumbnail: data.thumbnail || null,
-        excerpt: data.excerpt || markdownContent.substring(0, 150) + '...',
+        excerpt: data.excerpt || (markdownContent ? markdownContent.substring(0, 150) + '...' : ''),
+        content_type: data.content_type || 'body',
+        pdf: data.pdf || null
       });
     }
   });
@@ -256,6 +242,3 @@ function generateBlogIndex() {
 }
 
 generateBlogIndex();
-
-
-

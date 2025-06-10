@@ -17,7 +17,15 @@ collections:
       - {label: "Publish Date", name: "date", widget: "datetime"}
       - {label: "Published By", name: "author", widget: "string", required: true}
       - {label: "Featured Image", name: "thumbnail", widget: "image", required: false}
-      - {label: "Body", name: "body", widget: "markdown"}
+      - label: "Content Type"
+        name: "content_type"
+        widget: "select"
+        options:
+          - { label: "Markdown Body", value: "body" }
+          - { label: "PDF File", value: "pdf" }
+        default: "body"
+      - {label: "Body", name: "body", widget: "markdown", required: false, hint: "Write your blog post here."}
+      - {label: "PDF File", name: "pdf", widget: "file", required: false, media_library: {allow_multiple: false}, hint: "Upload a PDF file if you want to use PDF instead of body."}
 
   - name: "cv"
     label: "CV"
