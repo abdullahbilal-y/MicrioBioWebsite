@@ -66,28 +66,26 @@
   <!-- Netlify CMS Scripts -->
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    function setupNetlifyIdentity() {
-      if (window.netlifyIdentity) {
-        window.netlifyIdentity.on("init", user => {
-          if (!user) {
-            window.netlifyIdentity.on("login", () => {
-              window.location.href = "/admin/";
-            });
-          }
-        });
-        const loginBtn = document.querySelector('.netlify-identity-button');
-        if (loginBtn) {
-          loginBtn.addEventListener('click', function() {
-            window.netlifyIdentity.open();
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
           });
         }
-      } else {
-        setTimeout(setupNetlifyIdentity, 100); // Try again in 100ms
-      }
+      });
     }
-    setupNetlifyIdentity();
-  });
+  </script>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/admin/";
+          });
+        }
+      });
+    }
   </script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
