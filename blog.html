@@ -77,16 +77,29 @@
     }
   </script>
   <script>
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
+  document.addEventListener('DOMContentLoaded', function() {
+    function setupNetlifyIdentity() {
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", user => {
+          if (!user) {
+            window.netlifyIdentity.on("login", () => {
+              window.location.href = "/admin/";
+            });
+          }
+        });
+        const loginBtn = document.querySelector('.netlify-identity-button');
+        if (loginBtn) {
+          loginBtn.addEventListener('click', function() {
+            window.netlifyIdentity.open();
           });
         }
-      });
+      } else {
+        setTimeout(setupNetlifyIdentity, 100); // Try again in 100ms
+      }
     }
-  </script>
+    setupNetlifyIdentity();
+  });
+</script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       const menuToggle = document.querySelector('.menu-toggle');
